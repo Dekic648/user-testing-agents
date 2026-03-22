@@ -1,128 +1,230 @@
-# User Testing Agents (UTA)
+<p align="center">
+  <strong>User Testing Agents</strong><br>
+  <em>9 AI personas. Parallel execution. One usability report.</em>
+</p>
 
-9 behavioral persona agents that test your product's usability in parallel. Each persona traces actual code paths from a distinct cognitive archetype and produces scored findings using a 5-dimension composite usability model.
+<p align="center">
+  <a href="#the-9-personas">Personas</a> |
+  <a href="#scoring-framework">Scoring</a> |
+  <a href="#how-it-works">How It Works</a> |
+  <a href="#installation">Install</a> |
+  <a href="#commands">Commands</a>
+</p>
 
-## What This Does
+---
 
-UTA launches 9 independent AI agents simultaneously, each simulating a real user with a specific behavioral profile grounded in cognitive science and UX research. They don't test against specs — they read your actual source code, trace routes, check handlers, verify state flows, and report what each behavioral type would experience.
+Real usability studies cost $5-15K and take weeks. UTA gives you 80% of the signal in 2 minutes.
 
-The orchestrator collects all 9 reports, deduplicates issues, computes composite scores, and produces a unified usability report.
+**User Testing Agents** launches 9 independent AI agents in parallel, each simulating a real user with a distinct behavioral profile grounded in published cognitive science research. They don't test against specs — they read your actual source code, trace routes, follow handlers, check state flows, and report exactly what each behavioral type would experience.
 
-## The 9 Behavioral Personas
+The orchestrator collects all 9 reports, cross-validates findings across personas, maps flow coverage, and produces a unified report with ranked priorities and directional solutions.
 
-| # | Persona | Behavioral Archetype | Grounded In |
-|---|---------|---------------------|-------------|
-| 1 | **Scanner** | Satisficer — skims, clicks first CTA, never reads | Krug, Simon (1956), Nielsen F-pattern |
-| 2 | **Deliberator** | Maximizer — reads everything, compares all options | Schwartz (2004), Pask (1976) |
-| 3 | **Rushing Pragmatist** | Time-pressured — 3 min, zero friction tolerance | Maule & Hockey (1993), CLT |
-| 4 | **Novice** | First-timer — no mental model, scared by jargon | Dreyfus (1980), Norman (2013) |
-| 5 | **Power User** | Expert — wants shortcuts, bulk ops, customization | Dreyfus (1980), Shneiderman (1986) |
-| 6 | **Distracted Multitasker** | Interrupted — 12 tabs, returns 10 min later | Altmann & Trafton (2002), CLT |
-| 7 | **Accessibility User** | Keyboard-only, screen reader dependent | WCAG 2.1, Microsoft Inclusive Design |
-| 8 | **Skeptical Evaluator** | Evaluating adoption — looking for red flags | Fogg (2002), trust literature |
-| 9 | **UI Purist** | Visual critic — every pixel, every spacing decision | Tractinsky (2000), Norman (2004), Gestalt |
+## Why This Exists
 
-## Scoring Framework: UTA Composite Usability Model
+Every product team ships features without real user testing. It's too slow, too expensive, too late. By the time you get usability feedback, the code has shipped and the team has moved on.
 
-5 dimensions with persona-specific weight adjustments:
+UTA changes the economics:
 
-| Dimension | Default Weight | What It Measures |
-|-----------|:---:|---|
-| **Effectiveness** | 25% | Completion rate, errors, dead-ends |
-| **Efficiency** | 20% | Step count vs. minimum, wasted effort, shortcuts |
-| **Learnability** | 20% | First-use success, jargon, empty states, progressive disclosure |
-| **Satisfaction** | 20% | Clarity, confidence, delight, trust signals |
-| **Craft** | 15% | Spacing, typography, color system, alignment, consistency |
+| | Traditional Usability Study | UTA |
+|---|---|---|
+| **Cost** | $5,000-15,000 per study | $0 (runs on your AI subscription) |
+| **Time** | 2-4 weeks | 2-3 minutes |
+| **Personas** | 5-8 recruited participants | 9 behavioral archetypes, every time |
+| **Consistency** | Varies by participant | Deterministic behavioral signatures |
+| **Integration** | Separate process | Runs in your editor, on your code |
+| **Specificity** | "Users had trouble with X" | "file.tsx:142 — handler returns early when state is null" |
 
-Benchmarks: **90+** Excellent | **75-89** Good | **60-74** Acceptable | **<60** Poor
+## The 9 Personas
 
-### Userfocus Prioritization (Issue Severity)
-
-Issues are also classified using the Userfocus 3-question decision tree:
-
-1. **Is it on a Red Route?** (critical user journey defined in domain.md)
-2. **Is it hard to overcome?** (show-stopper vs. workaround)
-3. **Is it persistent?** (one-time vs. recurring)
-
-This produces 4 severity levels: **Critical** > **Serious** > **Medium** > **Low**
-
-### What Makes Personas Rock-Solid
-
-Every persona is grounded in three layers of evidence:
+Each persona is grounded in three layers of evidence:
 
 1. **Academic citations** — published research with specific papers and years
-2. **Empirical behavioral markers** — real statistics from NNGroup, Baymard, WebAIM, Google, and others (e.g., "79% of users scan; only 16% read word-by-word")
-3. **Deterministic behavioral signatures** — IF/THEN rules derived from research that define exactly how each persona interacts with interfaces
+2. **Empirical behavioral markers** — real statistics from NNGroup, Baymard, WebAIM, Google (e.g., "79% of users scan; only 16% read word-by-word")
+3. **Deterministic behavioral signatures** — IF/THEN rules that define exactly how each persona interacts
 
-Personas also dynamically adapt their task to the product being tested via a **Task Selection Protocol**.
+| Persona | Behavioral Archetype | What They Catch | Research Basis |
+|---------|---------------------|----------------|---------------|
+| **Scanner** | Satisficer — skims, clicks first CTA, never reads | Dead-end flows, misleading visual hierarchy, broken happy paths | Simon (1956), Krug (2000), Nielsen F-pattern |
+| **Deliberator** | Maximizer — reads everything, compares all options | Missing tooltips, irreversible actions, inconsistent labels | Schwartz (2004), Pask (1976), Hick's Law |
+| **Rushing Pragmatist** | Time-pressured — 3 minutes, zero friction tolerance | Excessive steps, slow paths, input format barriers | Maule & Hockey (1993), Cognitive Load Theory |
+| **Novice** | First-timer — no mental model, scared by jargon | Jargon, empty states, missing onboarding, no guidance | Dreyfus (1980), Norman (2013) |
+| **Power User** | Expert — wants shortcuts, bulk ops, customization | Missing keyboard shortcuts, no bulk actions, broken edge cases | Shneiderman (1986), Fitts' Law |
+| **Distracted Multitasker** | Interrupted — 12 tabs, returns 10 min later | Lost form state, no autosave, missing re-orientation cues | Altmann & Trafton (2002), Iqbal & Horvitz (2007) |
+| **Accessibility User** | Keyboard-only, screen reader dependent | Missing ARIA labels, broken focus management, contrast failures | WCAG 2.1, WebAIM Million Study |
+| **Skeptical Evaluator** | Evaluating adoption — looking for red flags | Broken error states, missing loading states, unprofessional edges | Fogg (2002), Stanford Credibility Research |
+| **UI Purist** | Visual critic — judges every pixel | Spacing inconsistency, typography violations, color system breaks | Tractinsky (2000), Gestalt Principles, 8px Grid |
+
+### Mandatory Audit Checklists
+
+Every persona carries a 14-15 item audit checklist — proactive checks they run regardless of what they encounter. The Scanner checks CTA hierarchy and first-click success. The Accessibility User checks headings, landmarks, ARIA, and focus management. The UI Purist checks spacing grids, type scales, and component consistency.
+
+## Scoring Framework
+
+### UTA Composite Usability Model
+
+5 dimensions, each with persona-specific weight adjustments:
+
+| Dimension | Weight | What It Measures |
+|-----------|:---:|---|
+| **Effectiveness** | 25% | Can the user finish? Completion rate, errors, dead-ends |
+| **Efficiency** | 20% | How much effort? Step count vs. minimum, wasted effort |
+| **Learnability** | 20% | Can a new user figure it out? Jargon, empty states, progressive disclosure |
+| **Satisfaction** | 20% | How does it feel? Clarity, confidence, delight, trust signals |
+| **Craft** | 15% | Visual quality. Spacing, typography, color system, alignment |
+
+Each persona weighs dimensions differently. The Novice weights Learnability at 35%. The UI Purist weights Craft at 50%. The Power User weights Efficiency at 30%.
+
+**Benchmarks:** 90+ Excellent | 75-89 Good | 60-74 Acceptable | <60 Poor
+
+### Userfocus Prioritization
+
+Every issue is also classified using the Userfocus 3-question decision tree:
+
+```
+Is it on a Red Route? (critical user journey)
+  YES + Show-stopper?  --> CRITICAL
+  YES + Workaround + Persistent?  --> SERIOUS
+  NO  + Show-stopper?  --> SERIOUS
+  NO  + Workaround + One-time?  --> LOW
+```
+
+This dual prioritization (composite scoring + Userfocus severity) ensures issues are ranked by both measurable impact and real-world urgency.
+
+## How It Works
+
+```
+                         /uta:test
+                            |
+                    Flow Discovery
+                  (map all user flows)
+                            |
+              Coverage Distribution
+            (assign flows to personas)
+                            |
+        +---+---+---+---+---+---+---+---+---+
+        |   |   |   |   |   |   |   |   |   |
+        v   v   v   v   v   v   v   v   v
+       [1] [2] [3] [4] [5] [6] [7] [8] [9]
+        |   |   |   |   |   |   |   |   |
+        +---+---+---+---+---+---+---+---+
+                            |
+                     Collect 9 Reports
+                            |
+                  Deduplicate Issues
+                            |
+                Cross-Validation Pass
+          ("Does Scanner's issue also
+            break for the Novice?")
+                            |
+                 Userfocus Severity
+                   Classification
+                            |
+              Ranked Priorities with
+            Full Descriptions + Solutions
+                            |
+                  Unified Report + Save
+```
+
+1. **Flow Discovery** — reads your router/navigation to map all user-facing flows
+2. **Coverage Distribution** — assigns flows to personas based on behavioral fit
+3. **Parallel Launch** — fires all 9 persona agents simultaneously
+4. **Code Tracing** — each persona reads actual source files, follows handlers, checks state
+5. **Cross-Validation** — orchestrator checks if issues found by one persona affect others
+6. **Dual Prioritization** — composite scoring + Userfocus decision tree
+7. **Unified Report** — scorecard, coverage matrix, ranked priorities with solutions
+
+### What the Report Contains
+
+- **Flow Coverage Matrix** — which flows were tested by which personas (gaps flagged)
+- **Composite Scorecard** — 5 dimensions x 9 personas, with per-persona composites
+- **Cross-Impact Matrix** — issues cross-validated across personas
+- **Ranked Priorities** — each with full problem description, code location, behavioral impact, and directional solution
+- **Per-Persona Detail Reports** — full individual reports with journey traces
 
 ## Commands
 
-| Command | What It Does |
-|---------|-------------|
-| `/uta:test` | Full 9-persona parallel test |
-| `/uta:test-quick` | Quick 3-persona test (Scanner, Novice, UI Purist) |
-| `/uta:test-persona` | Single persona deep dive (e.g., `/uta:test-persona accessibility-user`) |
-| `/uta:report` | Reformat or filter the last report |
-| `/uta:compare` | Compare two test runs (fixed, regressed, persisted) |
+| Command | Personas | Use Case |
+|---------|:--------:|----------|
+| `/uta:test` | 9 | Full parallel usability test |
+| `/uta:test-quick` | 3 | Quick check (Scanner, Novice, UI Purist) |
+| `/uta:test-persona [name]` | 1 | Deep dive from one perspective |
+| `/uta:report` | — | Reformat or filter the last report |
+| `/uta:compare` | — | Diff two test runs (fixed, regressed, persisted) |
 
 ## Installation
 
 ```bash
-# Clone the repo
 git clone https://github.com/Dekic648/user-testing-agents.git
+cd user-testing-agents
 
-# Copy commands (enables /uta:* slash commands)
+# Install commands (enables /uta:* slash commands)
 mkdir -p ~/.claude/commands/uta
-cp user-testing-agents/commands/*.md ~/.claude/commands/uta/
+cp commands/*.md ~/.claude/commands/uta/
 
-# Copy skills, agents, and scoring (enables agent execution)
+# Install skills, agents, and scoring
 mkdir -p ~/.claude/uta
-cp -r user-testing-agents/skills ~/.claude/uta/
-cp -r user-testing-agents/agents ~/.claude/uta/
-cp -r user-testing-agents/scoring ~/.claude/uta/
+cp -r skills agents scoring ~/.claude/uta/
 ```
+
+Then open any project in Claude Code and run `/uta:test`.
 
 ## Domain Configuration
 
-For product-specific testing, create a `domain.md` in your project root. This tells personas what tasks to attempt, what tech stack to expect, what known issues to skip, and — critically — what your **Red Routes** are (the 3-5 most important user journeys). Issues on red routes are automatically elevated in severity.
+For product-specific testing, create a `domain.md` in your project root:
+
+```markdown
+## Product Under Test
+Product name: [name]
+What it does: [one sentence]
+Tech stack: [React, Next.js, etc.]
+
+## Core Tasks to Test
+1. Primary task: [e.g., "Create a chart and export as PDF"]
+2. First-time task: [e.g., "Make first chart with sample data"]
+3. Power user task: [e.g., "Customize axes, add reference lines, bulk export"]
+
+## Red Routes (Critical User Journeys)
+1. New user -> create first chart -> export
+2. Returning user -> open saved chart -> modify -> re-export
+
+## Design System
+Base spacing unit: 8px
+Type scale: 12/14/16/20/24/32
+```
+
+Personas adapt their tasks, the Userfocus framework uses your Red Routes for severity classification, and the UI Purist uses your design system as the benchmark.
 
 ## Report Persistence
 
-Test reports are saved to `.uta/reports/` in the tested project directory (timestamped). This enables the `/uta:compare` command to diff across runs.
-
-## How It Works
-
-1. You run `/uta:test` and specify a scope (feature, directory, or "test everything")
-2. The orchestrator launches all 9 persona agents in parallel
-3. Each persona independently reads your code, traces user journeys, and scores usability
-4. The orchestrator collects all 9 reports and synthesizes:
-   - Deduplicates issues across personas
-   - Computes per-persona composite scores (persona-specific weights)
-   - Identifies cross-persona patterns (systemic vs. edge-case issues)
-   - Produces a fix priority matrix (severity x persona count x fix size)
-5. The unified report is presented and saved
+Reports save to `.uta/reports/` in the tested project (timestamped). Run `/uta:compare` to see what improved, regressed, or persisted between runs.
 
 ## Architecture
 
 ```
 user-testing-agents/
-├── agents/orchestrator.md        # Parallel launcher + synthesizer
-├── skills/                       # 9 persona agents
-│   ├── scanner/skill.md
-│   ├── deliberator/skill.md
-│   ├── rushing-pragmatist/skill.md
-│   ├── novice/skill.md
-│   ├── power-user/skill.md
-│   ├── distracted-multitasker/skill.md
-│   ├── accessibility-user/skill.md
-│   ├── skeptical-evaluator/skill.md
-│   └── ui-purist/skill.md
-├── scoring/composite-model.md    # 5-dimension scoring framework
-├── commands/                     # 5 slash commands
-├── domain.md                     # Product context template
-└── .claude-plugin/               # Plugin manifest
+├── agents/orchestrator.md           # Flow discovery, parallel launch, cross-validation, synthesis
+├── skills/                          # 9 persona agents
+│   ├── scanner/skill.md             # Satisficer (Simon, Krug, Nielsen)
+│   ├── deliberator/skill.md         # Maximizer (Schwartz, Pask)
+│   ├── rushing-pragmatist/skill.md  # Time-pressured (Maule & Hockey)
+│   ├── novice/skill.md              # First-timer (Dreyfus, Norman)
+│   ├── power-user/skill.md          # Expert (Shneiderman, Fitts)
+│   ├── distracted-multitasker/skill.md  # Interrupted (Altmann & Trafton)
+│   ├── accessibility-user/skill.md  # Keyboard/SR (WCAG 2.1)
+│   ├── skeptical-evaluator/skill.md # Trust evaluator (Fogg)
+│   └── ui-purist/skill.md           # Visual critic (Tractinsky, Gestalt)
+├── scoring/composite-model.md       # 5-dimension scoring + Userfocus decision tree
+├── commands/                        # 5 slash commands
+├── domain.md                        # Product context template
+└── .claude-plugin/                  # Plugin manifest
 ```
+
+## Roadmap
+
+- [ ] **MCP Server** — expose UTA as tools for any MCP-compatible client (Claude Desktop, Cursor, VS Code)
+- [ ] **CI/CD Integration** — run usability tests as part of your build pipeline
+- [ ] **Severity Calibration** — tune scoring formulas based on battle-test data
+- [ ] **Custom Personas** — define your own behavioral archetypes for domain-specific testing
 
 ## License
 

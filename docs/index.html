@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Testing Agents — 9 AI Personas for Usability Testing</title>
+    <meta name="description" content="9 behavioral persona agents that test your product's usability in parallel. Each grounded in cognitive science, tracing actual code paths.">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --surface-2: #1a1a28;
+            --border: #2a2a3a;
+            --text: #e8e8f0;
+            --text-muted: #8888a0;
+            --accent: #6366f1;
+            --accent-light: #818cf8;
+            --accent-glow: rgba(99, 102, 241, 0.15);
+            --green: #34d399;
+            --amber: #fbbf24;
+            --red: #f87171;
+            --blue: #60a5fa;
+            --purple: #a78bfa;
+            --pink: #f472b6;
+            --cyan: #22d3ee;
+            --orange: #fb923c;
+            --lime: #a3e635;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, var(--accent-glow) 0%, transparent 60%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+
+        .hero-content { position: relative; z-index: 1; max-width: 800px; }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--accent-light);
+            margin-bottom: 2rem;
+            letter-spacing: 0.05em;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 span { color: var(--accent-light); }
+
+        .hero-sub {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.5;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-light);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+        }
+
+        /* Sections */
+        section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem;
+        }
+
+        .section-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-light);
+            margin-bottom: 0.75rem;
+        }
+
+        h2 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .section-desc {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin-bottom: 3rem;
+        }
+
+        /* Comparison */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .compare-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .compare-card.old {
+            background: var(--surface);
+            opacity: 0.7;
+        }
+
+        .compare-card.new {
+            background: var(--surface-2);
+            border-color: var(--accent);
+            box-shadow: 0 0 40px var(--accent-glow);
+        }
+
+        .compare-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .compare-card.new h3 { color: var(--accent-light); }
+
+        .compare-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
+
+        .compare-item:last-child { border-bottom: none; }
+
+        .compare-value { font-weight: 600; }
+        .compare-card.new .compare-value { color: var(--green); }
+
+        /* Persona Grid */
+        .persona-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .persona-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .persona-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        .persona-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .persona-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .persona-name {
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        .persona-archetype {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .persona-catches {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .persona-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .tag {
+            padding: 0.2rem 0.6rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        /* Problems Matrix */
+        .matrix-container {
+            overflow-x: auto;
+            margin: 2rem 0;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .matrix {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .matrix th {
+            background: var(--surface-2);
+            padding: 1rem 0.75rem;
+            text-align: center;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            white-space: nowrap;
+        }
+
+        .matrix th:first-child {
+            text-align: left;
+            min-width: 220px;
+        }
+
+        .matrix td {
+            padding: 0.75rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .matrix td:first-child {
+            text-align: left;
+            font-weight: 500;
+            background: var(--surface);
+        }
+
+        .matrix tr:hover td { background: var(--surface-2); }
+        .matrix tr:hover td:first-child { background: var(--surface-2); }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dot.primary {
+            background: var(--accent-light);
+            box-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        .dot.secondary { background: var(--text-muted); opacity: 0.5; }
+        .dot.none { background: transparent; border: 1px solid var(--border); }
+
+        .matrix-legend {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .matrix-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Scoring */
+        .dimension-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .dimension-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .dimension-weight {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-light);
+            margin-bottom: 0.25rem;
+        }
+
+        .dimension-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .dimension-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Evidence Layers */
+        .evidence-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .evidence-layer {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem 2rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .evidence-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .evidence-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .evidence-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .evidence-example {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: var(--green);
+            margin-top: 0.5rem;
+        }
+
+        /* Flow diagram */
+        .flow {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 3rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .flow-step {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin: 0.5rem;
+        }
+
+        .flow-step.highlight {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .flow-arrow {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            margin: 0 0.5rem;
+        }
+
+        .flow-parallel {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            border: 1px dashed var(--accent);
+            border-radius: 12px;
+            background: var(--accent-glow);
+        }
+
+        .flow-parallel-label {
+            width: 100%;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .flow-persona-chip {
+            padding: 0.4rem 0.8rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+
+        /* Install */
+        .install-block {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 2;
+            overflow-x: auto;
+        }
+
+        .install-comment { color: var(--text-muted); }
+        .install-cmd { color: var(--green); }
+
+        /* CTA */
+        .cta {
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .cta h2 { margin-bottom: 1.5rem; }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: var(--surface-2);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+        }
+
+        footer a { color: var(--accent-light); text-decoration: none; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .compare-grid { grid-template-columns: 1fr; }
+            .dimension-grid { grid-template-columns: repeat(2, 1fr); }
+            .persona-grid { grid-template-columns: 1fr; }
+            .hero-stats { gap: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+    <div class="hero-content">
+        <div class="hero-badge">Open Source Claude Code Plugin</div>
+        <h1>Test usability with<br><span>9 AI personas</span></h1>
+        <p class="hero-sub">Each persona is grounded in cognitive science research, traces your actual code paths, and reports what real users would experience. In parallel. In 2 minutes.</p>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-number">9</div>
+                <div class="stat-label">Behavioral Personas</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Scoring Dimensions</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">30+</div>
+                <div class="stat-label">Research Citations</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">~2min</div>
+                <div class="stat-label">Full Test Run</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Comparison -->
+<section>
+    <div class="section-label">The Problem</div>
+    <h2>Usability testing shouldn't cost $15K</h2>
+    <p class="section-desc">Traditional studies take weeks, cost thousands, and arrive after the code has shipped. UTA runs in your editor, on your code, in minutes.</p>
+
+    <div class="compare-grid">
+        <div class="compare-card old">
+            <h3>Traditional Usability Study</h3>
+            <div class="compare-item"><span>Cost</span><span class="compare-value">$5,000 - $15,000</span></div>
+            <div class="compare-item"><span>Timeline</span><span class="compare-value">2 - 4 weeks</span></div>
+            <div class="compare-item"><span>Participants</span><span class="compare-value">5 - 8 recruited</span></div>
+            <div class="compare-item"><span>Consistency</span><span class="compare-value">Varies per person</span></div>
+            <div class="compare-item"><span>Specificity</span><span class="compare-value">"Users had trouble with X"</span></div>
+            <div class="compare-item"><span>Integration</span><span class="compare-value">Separate process</span></div>
+        </div>
+        <div class="compare-card new">
+            <h3>User Testing Agents</h3>
+            <div class="compare-item"><span>Cost</span><span class="compare-value">$0</span></div>
+            <div class="compare-item"><span>Timeline</span><span class="compare-value">2 - 3 minutes</span></div>
+            <div class="compare-item"><span>Participants</span><span class="compare-value">9 behavioral archetypes</span></div>
+            <div class="compare-item"><span>Consistency</span><span class="compare-value">Deterministic signatures</span></div>
+            <div class="compare-item"><span>Specificity</span><span class="compare-value">file.tsx:142 - handler returns early</span></div>
+            <div class="compare-item"><span>Integration</span><span class="compare-value">Runs in your editor</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- Personas -->
+<section>
+    <div class="section-label">The Agents</div>
+    <h2>9 behavioral personas, each grounded in research</h2>
+    <p class="section-desc">Not demographic personas. Behavioral archetypes derived from cognitive science — how people actually interact with interfaces.</p>
+
+    <div class="persona-grid">
+        <div class="persona-card">
+            <div class="persona-header">
+                <div class="persona-icon" style="background: rgba(99,102,241,0.15); color: var(--accent-light);">S</div>
+                <div>
+                    <div class="persona-name">Scanner</div>
+                    <div class="persona-archetype">Satisficer</div>
+                </div>
+            </div>
+            <div class="persona-catches">Skims, clicks first CTA, never reads body text. 79% of users behave this way (NNGroup). Catches dead-end flows, misleading hierarchy, broken happy paths.</div>
+            <div class="persona-tags"><span class="tag">Simon 1956</span><span class="tag">Krug 2000</span><span class="tag">Nielsen F-pattern</span></div>
+        </div>
+
+        <div class="persona-card">
+            <div class="persona-header">
+                <div class="persona-icon" style="background: rgba(168,85,247,0.15); color: var(--purple);">D</div>
+                <div>
+                    <div class="persona-name">Deliberator</div>
+                    <div class="persona-archetype">Maximizer</div>
+                </div>
+            </div>
+            <div class="persona-catches">Reads everything, compares all options, needs undo before committing. Catches missing tooltips, irreversible actions, inconsistent labels, information gaps.</div>
+            <div class="persona-tags"><span class="tag">Schwartz 2004</span><span class="tag">Pask 1976</span><span class="tag">Hick's Law</span></div>
+        </div>
+
+        <div class="persona-card">
+            <div class="persona-header">
+                <div class="persona-icon" style="background: rgba(251,191,36,0.15); color: var(--amber);">R</div>
+                <div>
+                    <div class="persona-name">Rushing Pragmatist</div>
+                    <div class="persona-archetype">Time-Pressured</div>
+                </div>
+            </div>
+            <div class="persona-catches">3 minutes. Zero friction tolerance. Abandons at first roadblock. Catches excessive steps, slow paths, input format barriers, unprofessional output.</div>
+            <div class="persona-tags"><span class="tag">Maule & Hockey 1993</span><span class="tag">CLT</span><span class="tag">Fitts' Law</span></div>
+        </div>
+
+        <div class="persona-card">
+            <div class="persona-header">
+                <div class="persona-icon" style="background: rgba(52,211,153,0.15); color: var(--green);">N</div>
+                <div>
+                    <div class="persona-name">Novice</div>
+                    <div class="persona-archetype">First-Timer</div>
+                </div>
+            </div>
+            <div class="persona-catches">No mental model. Scared by jargon. 87% of product returns are "couldn't figure it out" (Norman). Catches missing onboarding, jargon, empty states.</div>
+            <div class="persona-tags"><span class="tag">Dreyfus 1980</span><span class="tag">Norman 2013</span><span class="tag">Sweller CLT</span></div>
+        </div>
+
+        <div class="persona-card">
+            <div class="persona-header">
+                <div class="persona-icon" style="background: rgba(96,165,250,0.15); color: var(--blue);">P</div>
+                <div>
+                    <div class="persona-name">Power User</div>
+                    <div class="persona-archetype">Expert</div>
+                </div>
+            </div>
+            <div class="persona-catches">Daily user. Keyboard first. Wants shortcuts, bulk ops, customization. 10-15% of users drive 50%+ of usage (NNGroup). Catches missing shortcuts, broken edge cases.</div>
+            <div class="persona-tags"><span class="tag">Shneiderman 1986</span><span class="tag">Dreyfus Expert</span><span class="tag">Zipf's Law</span></div>
+        </div>
+
+        <div class="persona-card">
+            <div class="persona-header">
+                <div class="persona-icon" style="background: rgba(244,114,182,0.15); color: var(--pink);">M</div>
+                <div>
+                    <div class="persona-name">Distracted Multitasker</div>
+                    <div class="persona-archetype">Interrupted</div>
+                </div>
+            </div>
+            <div class="persona-catches">12 tabs open, leaves mid-task, returns 10 min later. 25 min average to resume (Iqbal & Horvitz). Catches lost state, no autosave, missing re-orientation.</div>
+            <div class="persona-tags"><span class="tag">Altmann & Trafton 2002</span><span class="tag">Mark et al. 2008</span></div>
+        </div>
+
+        <div class="persona-card">
+            <div class="persona-header">
+                <div class="persona-icon" style="background: rgba(34,211,238,0.15); color: var(--cyan);">A</div>
+                <div>
+                    <div class="persona-name">Accessibility User</div>
+                    <div class="persona-archetype">Keyboard / Screen Reader</div>
+                </div>
+            </div>
+            <div class="persona-catches">Keyboard-only. Screen reader dependent. 96.3% of pages fail WCAG (WebAIM 2023). Catches missing ARIA, broken focus, contrast failures, inaccessible controls.</div>
+            <div class="persona-tags"><span class="tag">WCAG 2.1</span><span class="tag">WebAIM Million</span><span class="tag">Microsoft Inclusive</span></div>
+        </div>
+
+        <div class="persona-card">
+            <div class="persona-header">
+                <div class="persona-icon" style="background: rgba(248,113,113,0.15); color: var(--red);">E</div>
+                <div>
+                    <div class="persona-name">Skeptical Evaluator</div>
+                    <div class="persona-archetype">Adoption Judge</div>
+                </div>
+            </div>
+            <div class="persona-catches">Evaluating whether to adopt. 46% judge credibility by design (Fogg). Catches broken error states, missing loading states, stub pages, unprofessional edges.</div>
+            <div class="persona-tags"><span class="tag">Fogg 2002</span><span class="tag">Stanford Credibility</span><span class="tag">McKnight 2002</span></div>
+        </div>
+
+        <div class="persona-card">
+            <div class="persona-header">
+                <div class="persona-icon" style="background: rgba(251,146,60,0.15); color: var(--orange);">U</div>
+                <div>
+                    <div class="persona-name">UI Purist</div>
+                    <div class="persona-archetype">Visual Critic</div>
+                </div>
+            </div>
+            <div class="persona-catches">Judges every pixel. 8px grid. Type scale. Color system. Users judge aesthetics in 17-50ms (Google). Catches spacing violations, typography issues, alignment breaks.</div>
+            <div class="persona-tags"><span class="tag">Tractinsky 2000</span><span class="tag">Gestalt</span><span class="tag">Apple HIG</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- Persona x Problem Matrix -->
+<section>
+    <div class="section-label">Coverage</div>
+    <h2>What each persona hunts for</h2>
+    <p class="section-desc">Every problem type is covered by multiple personas. The matrix shows primary focus and secondary coverage.</p>
+
+    <div class="matrix-container">
+        <table class="matrix">
+            <thead>
+                <tr>
+                    <th>Problem Type</th>
+                    <th>Scanner</th>
+                    <th>Deliber.</th>
+                    <th>Pragm.</th>
+                    <th>Novice</th>
+                    <th>Power</th>
+                    <th>Multi.</th>
+                    <th>A11y</th>
+                    <th>Eval.</th>
+                    <th>Purist</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Dead-end flows / no path forward</td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot none"></span></td>
+                </tr>
+                <tr>
+                    <td>Broken handlers / silent failures</td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot none"></span></td>
+                </tr>
+                <tr>
+                    <td>Jargon / technical language</td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot none"></span></td>
+                </tr>
+                <tr>
+                    <td>Missing empty states</td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot none"></span></td>
+                </tr>
+                <tr>
+                    <td>Missing keyboard shortcuts</td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                </tr>
+                <tr>
+                    <td>Lost form state / no autosave</td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot none"></span></td>
+                </tr>
+                <tr>
+                    <td>Accessibility failures (ARIA, focus, contrast)</td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                </tr>
+                <tr>
+                    <td>Irreversible actions / no undo</td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot none"></span></td>
+                </tr>
+                <tr>
+                    <td>Excessive steps / slow paths</td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                </tr>
+                <tr>
+                    <td>Spacing / typography / alignment issues</td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot primary"></span></td>
+                </tr>
+                <tr>
+                    <td>Missing loading / error states</td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot none"></span></td>
+                </tr>
+                <tr>
+                    <td>Credibility / trust signals missing</td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                </tr>
+                <tr>
+                    <td>Edge case failures (extreme inputs)</td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot none"></span></td>
+                </tr>
+                <tr>
+                    <td>No onboarding / guidance</td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot secondary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot none"></span></td>
+                    <td><span class="dot primary"></span></td>
+                    <td><span class="dot none"></span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="matrix-legend">
+        <div class="matrix-legend-item"><span class="dot primary"></span> Primary focus</div>
+        <div class="matrix-legend-item"><span class="dot secondary"></span> Secondary coverage</div>
+        <div class="matrix-legend-item"><span class="dot none"></span> Not in scope</div>
+    </div>
+</section>
+
+<!-- Evidence -->
+<section>
+    <div class="section-label">Methodology</div>
+    <h2>Three layers of evidence per persona</h2>
+    <p class="section-desc">Every persona's existence is provable, not just theoretically motivated. Challenge any persona — the data backs it up.</p>
+
+    <div class="evidence-stack">
+        <div class="evidence-layer">
+            <div class="evidence-number">1</div>
+            <div>
+                <div class="evidence-title">Academic Citations</div>
+                <div class="evidence-desc">Published research with specific papers, years, and findings. Each persona traces back to foundational work in cognitive science, behavioral economics, or HCI.</div>
+                <div class="evidence-example">Simon (1956), Schwartz (2004), Dreyfus & Dreyfus (1980), Norman (2013), Fogg (2002)</div>
+            </div>
+        </div>
+        <div class="evidence-layer">
+            <div class="evidence-number">2</div>
+            <div>
+                <div class="evidence-title">Empirical Behavioral Markers</div>
+                <div class="evidence-desc">Real statistics from large-scale research. Not opinions — measured facts that prove each behavioral pattern exists at scale.</div>
+                <div class="evidence-example">"79% of users scan" (NNGroup) | "96.3% of pages fail WCAG" (WebAIM) | "25 min to resume after interruption" (Iqbal & Horvitz)</div>
+            </div>
+        </div>
+        <div class="evidence-layer">
+            <div class="evidence-number">3</div>
+            <div>
+                <div class="evidence-title">Deterministic Behavioral Signatures</div>
+                <div class="evidence-desc">IF/THEN rules derived from research that define exactly how each persona interacts. Not guidelines — deterministic behavior that makes every test reproducible.</div>
+                <div class="evidence-example">IF page_has_multiple_CTAs -> pick largest | IF no_autosave_found -> flag Critical | IF heading_skips_level -> WCAG 1.3.1 failure</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Scoring -->
+<section>
+    <div class="section-label">Scoring</div>
+    <h2>5-dimension composite usability model</h2>
+    <p class="section-desc">Each persona scores across 5 dimensions with persona-specific weight adjustments. The Novice weights Learnability at 35%. The UI Purist weights Craft at 50%.</p>
+
+    <div class="dimension-grid">
+        <div class="dimension-card">
+            <div class="dimension-weight">25%</div>
+            <div class="dimension-name">Effectiveness</div>
+            <div class="dimension-desc">Can the user finish? Completion rate, errors, dead-ends</div>
+        </div>
+        <div class="dimension-card">
+            <div class="dimension-weight">20%</div>
+            <div class="dimension-name">Efficiency</div>
+            <div class="dimension-desc">How much effort? Steps vs. minimum, wasted effort</div>
+        </div>
+        <div class="dimension-card">
+            <div class="dimension-weight">20%</div>
+            <div class="dimension-name">Learnability</div>
+            <div class="dimension-desc">First-use success? Jargon, empty states, disclosure</div>
+        </div>
+        <div class="dimension-card">
+            <div class="dimension-weight">20%</div>
+            <div class="dimension-name">Satisfaction</div>
+            <div class="dimension-desc">How does it feel? Clarity, confidence, trust</div>
+        </div>
+        <div class="dimension-card">
+            <div class="dimension-weight">15%</div>
+            <div class="dimension-name">Craft</div>
+            <div class="dimension-desc">Visual quality. Spacing, typography, alignment</div>
+        </div>
+    </div>
+</section>
+
+<!-- Install -->
+<section>
+    <div class="section-label">Get Started</div>
+    <h2>Install in 30 seconds</h2>
+    <p class="section-desc">Clone, copy, run. Works with any codebase.</p>
+
+    <div class="install-block">
+        <span class="install-comment"># Clone the repo</span><br>
+        <span class="install-cmd">git clone https://github.com/Dekic648/user-testing-agents.git</span><br>
+        <span class="install-cmd">cd user-testing-agents</span><br><br>
+        <span class="install-comment"># Install commands + skills</span><br>
+        <span class="install-cmd">mkdir -p ~/.claude/commands/uta ~/.claude/uta</span><br>
+        <span class="install-cmd">cp commands/*.md ~/.claude/commands/uta/</span><br>
+        <span class="install-cmd">cp -r skills agents scoring ~/.claude/uta/</span><br><br>
+        <span class="install-comment"># Open any project and run</span><br>
+        <span class="install-cmd">/uta:test</span>
+    </div>
+</section>
+
+<!-- CTA -->
+<div class="cta">
+    <h2>Ship products users actually want to use</h2>
+    <p class="section-desc" style="margin: 0 auto 2rem;">9 personas. 5 dimensions. 14 problem types. One command.</p>
+    <div class="cta-buttons">
+        <a href="https://github.com/Dekic648/user-testing-agents" class="btn btn-primary">View on GitHub</a>
+        <a href="https://github.com/Dekic648/user-testing-agents/tree/main/skills" class="btn btn-secondary">Browse Personas</a>
+    </div>
+</div>
+
+<footer>
+    Built by <a href="https://github.com/Dekic648">Milo Vandekic</a> | MIT License | Powered by Claude
+</footer>
+
+</body>
+</html>
