@@ -141,6 +141,20 @@ This dual prioritization (composite scoring + Userfocus severity) ensures issues
 - **Ranked Priorities** — each with full problem description, code location, behavioral impact, and directional solution
 - **Per-Persona Detail Reports** — full individual reports with journey traces
 
+## Best For
+
+UTA personas are calibrated for products where users **navigate pages, fill forms, click buttons, read content, and expect professional output**.
+
+**Strong Fit:**
+- **SaaS / Web Applications** — dashboards, admin panels, analytics tools, CRM, project management (Notion, Linear, Airtable, HubSpot)
+- **Internal Tools / Enterprise Apps** — often built without design resources, highest ROI from usability testing
+- **E-commerce / Marketplaces** — checkout flows, product browsing, search, filtering, trust signals
+- **Developer Tools** — CLIs with web UIs, API dashboards, documentation platforms
+
+**Good Fit:**
+- **Marketing Sites / Landing Pages** — conversion optimization, credibility, visual polish
+- **Content Platforms** — blogs, news sites, CMS — navigation, readability, accessibility
+
 ## Commands
 
 | Command | Personas | Use Case |
@@ -219,12 +233,35 @@ user-testing-agents/
 └── .claude-plugin/                  # Plugin manifest
 ```
 
+## MCP Server
+
+Use UTA from any MCP-compatible client (Claude Desktop, Cursor, VS Code, Windsurf):
+
+```bash
+cd mcp-server && npm install && npm run build
+```
+
+Add to your client config:
+```json
+{
+  "mcpServers": {
+    "uta": {
+      "command": "node",
+      "args": ["/path/to/user-testing-agents/mcp-server/dist/index.js"]
+    }
+  }
+}
+```
+
+See [mcp-server/README.md](mcp-server/README.md) for full documentation.
+
 ## Roadmap
 
-- [ ] **MCP Server** — expose UTA as tools for any MCP-compatible client (Claude Desktop, Cursor, VS Code)
+- [x] **MCP Server** — expose UTA as tools for any MCP-compatible client
 - [ ] **CI/CD Integration** — run usability tests as part of your build pipeline
 - [ ] **Severity Calibration** — tune scoring formulas based on battle-test data
 - [ ] **Custom Personas** — define your own behavioral archetypes for domain-specific testing
+- [ ] **Web App** — paste a URL, get a usability report (browser-based testing)
 
 ## License
 
