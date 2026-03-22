@@ -789,6 +789,98 @@
     </div>
 </section>
 
+<!-- Install + MCP -->
+<section>
+    <div class="section-label">Get Started</div>
+    <h2>Two ways to run UTA</h2>
+    <p class="section-desc">Use as a Claude Code plugin or connect via MCP to any AI editor.</p>
+
+    <div class="tabs">
+        <button class="tab active" onclick="switchTab('claude-code')">Claude Code Plugin</button>
+        <button class="tab" onclick="switchTab('mcp-server')">MCP Server</button>
+    </div>
+
+    <div id="tab-claude-code" class="tab-content active">
+        <div class="install-block">
+            <span class="install-comment"># Clone the repo</span><br>
+            <span class="install-cmd">git clone https://github.com/Dekic648/user-testing-agents.git</span><br>
+            <span class="install-cmd">cd user-testing-agents</span><br><br>
+            <span class="install-comment"># Install commands + skills</span><br>
+            <span class="install-cmd">mkdir -p ~/.claude/commands/uta ~/.claude/uta</span><br>
+            <span class="install-cmd">cp commands/*.md ~/.claude/commands/uta/</span><br>
+            <span class="install-cmd">cp -r skills agents scoring ~/.claude/uta/</span><br><br>
+            <span class="install-comment"># Open any project and run</span><br>
+            <span class="install-cmd">/uta:test</span>
+        </div>
+    </div>
+
+    <div id="tab-mcp-server" class="tab-content">
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.05rem;">Connect UTA to any MCP-compatible AI tool. Your code stays local. Your AI subscription does the work.</p>
+
+        <div class="mcp-clients">
+            <div class="mcp-client"><span class="check">&#10003;</span> Claude Desktop</div>
+            <div class="mcp-client"><span class="check">&#10003;</span> Cursor</div>
+            <div class="mcp-client"><span class="check">&#10003;</span> VS Code</div>
+            <div class="mcp-client"><span class="check">&#10003;</span> Windsurf</div>
+            <div class="mcp-client"><span class="check">&#10003;</span> Any MCP Client</div>
+        </div>
+
+        <div class="install-block">
+            <span class="install-comment"># Clone and build the MCP server</span><br>
+            <span class="install-cmd">git clone https://github.com/Dekic648/user-testing-agents.git</span><br>
+            <span class="install-cmd">cd user-testing-agents/mcp-server</span><br>
+            <span class="install-cmd">npm install && npm run build</span>
+        </div>
+
+        <span class="config-label">Add to your AI tool's MCP config:</span>
+        <div class="config-block">
+            <span class="config-bracket">{</span><br>
+            &nbsp;&nbsp;<span class="config-key">"mcpServers"</span>: <span class="config-bracket">{</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="config-key">"uta"</span>: <span class="config-bracket">{</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="config-key">"command"</span>: <span class="config-string">"node"</span>,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="config-key">"args"</span>: <span class="config-bracket">[</span><span class="config-string">"/path/to/user-testing-agents/mcp-server/dist/index.js"</span><span class="config-bracket">]</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="config-bracket">}</span><br>
+            &nbsp;&nbsp;<span class="config-bracket">}</span><br>
+            <span class="config-bracket">}</span>
+        </div>
+
+        <div class="mcp-feature-grid">
+            <div class="mcp-feature">
+                <h4>4 Tools</h4>
+                <p><strong>uta_test</strong> — full 9-persona test<br>
+                <strong>uta_test_quick</strong> — 3-persona quick check<br>
+                <strong>uta_test_persona</strong> — single persona deep dive<br>
+                <strong>uta_list_personas</strong> — browse all personas</p>
+            </div>
+            <div class="mcp-feature">
+                <h4>12 Resources</h4>
+                <p><strong>uta://personas</strong> — overview of all 9<br>
+                <strong>uta://persona/{id}</strong> — full persona definitions<br>
+                <strong>uta://scoring-model</strong> — scoring framework<br>
+                <strong>uta://domain-template</strong> — config template</p>
+            </div>
+            <div class="mcp-feature">
+                <h4>Your Code Stays Local</h4>
+                <p>The MCP server provides instructions. Your AI tool reads your code locally. Nothing leaves your machine.</p>
+            </div>
+            <div class="mcp-feature">
+                <h4>Works Offline</h4>
+                <p>Once cloned and built, no external dependencies. No API keys to configure. No accounts to create.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function switchTab(tabId) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+    event.target.classList.add('active');
+}
+</script>
+
+
 <!-- Personas -->
 <section>
     <div class="section-label">The Agents</div>
@@ -1222,97 +1314,6 @@
         </div>
     </div>
 </section>
-
-<!-- Install + MCP -->
-<section>
-    <div class="section-label">Get Started</div>
-    <h2>Two ways to run UTA</h2>
-    <p class="section-desc">Use as a Claude Code plugin or connect via MCP to any AI editor.</p>
-
-    <div class="tabs">
-        <button class="tab active" onclick="switchTab('claude-code')">Claude Code Plugin</button>
-        <button class="tab" onclick="switchTab('mcp-server')">MCP Server</button>
-    </div>
-
-    <div id="tab-claude-code" class="tab-content active">
-        <div class="install-block">
-            <span class="install-comment"># Clone the repo</span><br>
-            <span class="install-cmd">git clone https://github.com/Dekic648/user-testing-agents.git</span><br>
-            <span class="install-cmd">cd user-testing-agents</span><br><br>
-            <span class="install-comment"># Install commands + skills</span><br>
-            <span class="install-cmd">mkdir -p ~/.claude/commands/uta ~/.claude/uta</span><br>
-            <span class="install-cmd">cp commands/*.md ~/.claude/commands/uta/</span><br>
-            <span class="install-cmd">cp -r skills agents scoring ~/.claude/uta/</span><br><br>
-            <span class="install-comment"># Open any project and run</span><br>
-            <span class="install-cmd">/uta:test</span>
-        </div>
-    </div>
-
-    <div id="tab-mcp-server" class="tab-content">
-        <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.05rem;">Connect UTA to any MCP-compatible AI tool. Your code stays local. Your AI subscription does the work.</p>
-
-        <div class="mcp-clients">
-            <div class="mcp-client"><span class="check">&#10003;</span> Claude Desktop</div>
-            <div class="mcp-client"><span class="check">&#10003;</span> Cursor</div>
-            <div class="mcp-client"><span class="check">&#10003;</span> VS Code</div>
-            <div class="mcp-client"><span class="check">&#10003;</span> Windsurf</div>
-            <div class="mcp-client"><span class="check">&#10003;</span> Any MCP Client</div>
-        </div>
-
-        <div class="install-block">
-            <span class="install-comment"># Clone and build the MCP server</span><br>
-            <span class="install-cmd">git clone https://github.com/Dekic648/user-testing-agents.git</span><br>
-            <span class="install-cmd">cd user-testing-agents/mcp-server</span><br>
-            <span class="install-cmd">npm install && npm run build</span>
-        </div>
-
-        <span class="config-label">Add to your AI tool's MCP config:</span>
-        <div class="config-block">
-            <span class="config-bracket">{</span><br>
-            &nbsp;&nbsp;<span class="config-key">"mcpServers"</span>: <span class="config-bracket">{</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="config-key">"uta"</span>: <span class="config-bracket">{</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="config-key">"command"</span>: <span class="config-string">"node"</span>,<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="config-key">"args"</span>: <span class="config-bracket">[</span><span class="config-string">"/path/to/user-testing-agents/mcp-server/dist/index.js"</span><span class="config-bracket">]</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="config-bracket">}</span><br>
-            &nbsp;&nbsp;<span class="config-bracket">}</span><br>
-            <span class="config-bracket">}</span>
-        </div>
-
-        <div class="mcp-feature-grid">
-            <div class="mcp-feature">
-                <h4>4 Tools</h4>
-                <p><strong>uta_test</strong> — full 9-persona test<br>
-                <strong>uta_test_quick</strong> — 3-persona quick check<br>
-                <strong>uta_test_persona</strong> — single persona deep dive<br>
-                <strong>uta_list_personas</strong> — browse all personas</p>
-            </div>
-            <div class="mcp-feature">
-                <h4>12 Resources</h4>
-                <p><strong>uta://personas</strong> — overview of all 9<br>
-                <strong>uta://persona/{id}</strong> — full persona definitions<br>
-                <strong>uta://scoring-model</strong> — scoring framework<br>
-                <strong>uta://domain-template</strong> — config template</p>
-            </div>
-            <div class="mcp-feature">
-                <h4>Your Code Stays Local</h4>
-                <p>The MCP server provides instructions. Your AI tool reads your code locally. Nothing leaves your machine.</p>
-            </div>
-            <div class="mcp-feature">
-                <h4>Works Offline</h4>
-                <p>Once cloned and built, no external dependencies. No API keys to configure. No accounts to create.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<script>
-function switchTab(tabId) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    document.getElementById('tab-' + tabId).classList.add('active');
-    event.target.classList.add('active');
-}
-</script>
 
 <!-- CTA -->
 <div class="cta">
