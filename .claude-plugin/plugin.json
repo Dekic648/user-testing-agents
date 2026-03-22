@@ -1,0 +1,22 @@
+{
+  "name": "user-testing-agents",
+  "description": "9 behavioral persona agents that test your product's usability in parallel. Each persona traces actual code paths from a distinct cognitive archetype — Scanner, Deliberator, Rushing Pragmatist, Novice, Power User, Distracted Multitasker, Accessibility User, Skeptical Evaluator, UI Purist — and produces scored findings using a 5-dimension composite usability model.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Milo Vandekic"
+  },
+  "homepage": "https://github.com/Dekic648/user-testing-agents",
+  "repository": "https://github.com/Dekic648/user-testing-agents",
+  "license": "MIT",
+  "keywords": [
+    "usability",
+    "testing",
+    "personas",
+    "ux",
+    "accessibility",
+    "agents",
+    "parallel",
+    "behavioral",
+    "cognitive-science"
+  ]
+}
