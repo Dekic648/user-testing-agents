@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="scroll-behavior: smooth;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,6 +36,207 @@
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
         }
+
+        /* Nav */
+        .nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.5rem;
+        }
+
+        .hamburger {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: all 0.3s;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .hamburger:hover { border-color: var(--accent); }
+
+        .hamburger span {
+            display: block;
+            width: 18px;
+            height: 2px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100vh;
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            padding: 5rem 2rem 2rem;
+            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .nav-menu.open { right: 0; }
+
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 998;
+        }
+
+        .nav-overlay.open { opacity: 1; pointer-events: all; }
+
+        .nav-section-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-light);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-section-label:first-child { margin-top: 0; }
+
+        .nav-link {
+            display: block;
+            padding: 0.6rem 0;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-link:hover { color: var(--text); }
+        .nav-link:last-child { border-bottom: none; }
+
+        /* Report Preview */
+        .report-preview {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+
+        .report-topbar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.2rem;
+            background: var(--surface-2);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .report-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .report-dot.r { background: #ff5f57; }
+        .report-dot.y { background: #febc2e; }
+        .report-dot.g { background: #28c840; }
+
+        .report-topbar-title {
+            margin-left: 0.75rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .report-body {
+            padding: 2rem;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.82rem;
+            line-height: 1.7;
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .report-body .rh1 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; font-family: -apple-system, system-ui, sans-serif; }
+        .report-body .rh2 { font-size: 0.95rem; font-weight: 600; color: var(--accent-light); margin-top: 1.5rem; margin-bottom: 0.5rem; font-family: -apple-system, system-ui, sans-serif; }
+        .report-body .rh3 { font-size: 0.85rem; font-weight: 600; color: var(--text); margin-top: 1.2rem; margin-bottom: 0.3rem; font-family: -apple-system, system-ui, sans-serif; }
+        .report-body .rmeta { color: var(--text-muted); }
+        .report-body .rscore { color: var(--green); font-weight: 600; }
+        .report-body .rscore.warn { color: var(--amber); }
+        .report-body .rscore.bad { color: var(--red); }
+        .report-body .rlabel { color: var(--cyan); }
+        .report-body .rval { color: var(--text); }
+        .report-body .rdivider { border-top: 1px solid var(--border); margin: 1rem 0; }
+
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.75rem 0;
+            font-size: 0.8rem;
+        }
+
+        .report-table th {
+            text-align: left;
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .report-table td {
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .report-table td.score { text-align: center; font-weight: 600; }
+
+        .report-tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+
+        .report-tab {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            background: none;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .report-tab:hover { color: var(--text); }
+        .report-tab.active { color: var(--accent-light); border-bottom-color: var(--accent-light); }
+
+        .report-pane { display: none; }
+        .report-pane.active { display: block; }
 
         /* Hero */
         .hero {
@@ -734,8 +935,37 @@
 </head>
 <body>
 
+<!-- Nav -->
+<div class="nav-overlay" id="nav-overlay" onclick="toggleNav()"></div>
+<nav class="nav">
+    <button class="hamburger" id="hamburger" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+    </button>
+    <div class="nav-menu" id="nav-menu">
+        <div class="nav-section-label">Overview</div>
+        <a href="#hero" class="nav-link" onclick="toggleNav()">Home</a>
+        <a href="#problem" class="nav-link" onclick="toggleNav()">The Problem</a>
+        <a href="#get-started" class="nav-link" onclick="toggleNav()">Get Started</a>
+
+        <div class="nav-section-label">Framework</div>
+        <a href="#personas" class="nav-link" onclick="toggleNav()">The 9 Personas</a>
+        <a href="#coverage" class="nav-link" onclick="toggleNav()">Coverage Matrix</a>
+        <a href="#report-example" class="nav-link" onclick="toggleNav()">Example Report</a>
+
+        <div class="nav-section-label">Methodology</div>
+        <a href="#methodology" class="nav-link" onclick="toggleNav()">Evidence Layers</a>
+        <a href="#scoring" class="nav-link" onclick="toggleNav()">Scoring Model</a>
+        <a href="#product-fit" class="nav-link" onclick="toggleNav()">Product Fit</a>
+
+        <div class="nav-section-label">Links</div>
+        <a href="https://github.com/Dekic648/user-testing-agents" class="nav-link" onclick="toggleNav()">GitHub Repo</a>
+        <a href="https://github.com/Dekic648/user-testing-agents/tree/main/skills" class="nav-link" onclick="toggleNav()">Browse Personas</a>
+        <a href="https://github.com/Dekic648/user-testing-agents/tree/main/mcp-server" class="nav-link" onclick="toggleNav()">MCP Server</a>
+    </div>
+</nav>
+
 <!-- Hero -->
-<div class="hero">
+<div class="hero" id="hero">
     <div class="hero-content">
         <div class="hero-badge">Open Source Claude Code Plugin</div>
         <h1>Test usability with<br><span>9 AI personas</span></h1>
@@ -762,7 +992,7 @@
 </div>
 
 <!-- Comparison -->
-<section>
+<section id="problem">
     <div class="section-label">The Problem</div>
     <h2>Usability testing shouldn't cost $15K</h2>
     <p class="section-desc">Traditional studies take weeks, cost thousands, and arrive after the code has shipped. UTA runs in your editor, on your code, in minutes.</p>
@@ -790,7 +1020,7 @@
 </section>
 
 <!-- Install + MCP -->
-<section>
+<section id="get-started">
     <div class="section-label">Get Started</div>
     <h2>Two ways to run UTA</h2>
     <p class="section-desc">Use as a Claude Code plugin or connect via MCP to any AI editor.</p>
@@ -878,11 +1108,24 @@ function switchTab(tabId) {
     document.getElementById('tab-' + tabId).classList.add('active');
     event.target.classList.add('active');
 }
+
+function toggleNav() {
+    document.getElementById('hamburger').classList.toggle('open');
+    document.getElementById('nav-menu').classList.toggle('open');
+    document.getElementById('nav-overlay').classList.toggle('open');
+}
+
+function switchReportTab(tabId) {
+    document.querySelectorAll('.report-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.report-pane').forEach(t => t.classList.remove('active'));
+    document.getElementById('rtab-' + tabId).classList.add('active');
+    event.target.classList.add('active');
+}
 </script>
 
 
 <!-- Personas -->
-<section>
+<section id="personas">
     <div class="section-label">The Agents</div>
     <h2>9 behavioral personas, each grounded in research</h2>
     <p class="section-desc">Not demographic personas. Behavioral archetypes derived from cognitive science — how people actually interact with interfaces.</p>
@@ -999,7 +1242,7 @@ function switchTab(tabId) {
 </section>
 
 <!-- Persona x Problem Matrix -->
-<section>
+<section id="coverage">
     <div class="section-label">Coverage</div>
     <h2>What each persona hunts for</h2>
     <p class="section-desc">Every problem type is covered by multiple personas. The matrix shows primary focus and secondary coverage.</p>
@@ -1200,8 +1443,132 @@ function switchTab(tabId) {
     </div>
 </section>
 
+<!-- Example Report -->
+<section id="report-example">
+    <div class="section-label">Output</div>
+    <h2>What a UTA report looks like</h2>
+    <p class="section-desc">Every test run produces a unified report with scores, ranked issues, and actionable solutions. Here's a real example structure.</p>
+
+    <div class="report-preview">
+        <div class="report-topbar">
+            <div class="report-dot r"></div>
+            <div class="report-dot y"></div>
+            <div class="report-dot g"></div>
+            <span class="report-topbar-title">uta-report-2026-03-22.md</span>
+        </div>
+        <div class="report-body">
+            <div class="report-tabs">
+                <button class="report-tab active" onclick="switchReportTab('scorecard')">Scorecard</button>
+                <button class="report-tab" onclick="switchReportTab('issues')">Ranked Issues</button>
+                <button class="report-tab" onclick="switchReportTab('coverage')">Flow Coverage</button>
+            </div>
+
+            <div id="rtab-scorecard" class="report-pane active">
+                <div class="rh1">UTA Composite Usability Report: Chartsmither</div>
+                <div class="rmeta">Test date: 2026-03-22 | Personas: 9/9 | Domain: loaded</div>
+                <div style="margin-top:1rem;font-size:1.5rem;font-weight:700;">Overall Score: <span class="rscore warn">72</span>/100 — Acceptable</div>
+
+                <div class="rh2">Composite Scorecard</div>
+                <table class="report-table">
+                    <thead>
+                        <tr><th>Persona</th><th>Effect.</th><th>Effic.</th><th>Learn.</th><th>Satis.</th><th>Craft</th><th>Composite</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Scanner</td><td class="score" style="color:var(--green)">85</td><td class="score" style="color:var(--green)">78</td><td class="score" style="color:var(--amber)">70</td><td class="score" style="color:var(--green)">80</td><td class="score" style="color:var(--amber)">65</td><td class="score" style="color:var(--green)">77</td></tr>
+                        <tr><td>Deliberator</td><td class="score" style="color:var(--green)">80</td><td class="score" style="color:var(--amber)">65</td><td class="score" style="color:var(--green)">82</td><td class="score" style="color:var(--green)">78</td><td class="score" style="color:var(--amber)">72</td><td class="score" style="color:var(--green)">76</td></tr>
+                        <tr><td>Rushing Pragmatist</td><td class="score" style="color:var(--amber)">70</td><td class="score" style="color:var(--amber)">60</td><td class="score" style="color:var(--amber)">55</td><td class="score" style="color:var(--amber)">68</td><td class="score" style="color:var(--amber)">60</td><td class="score" style="color:var(--amber)">63</td></tr>
+                        <tr><td>Novice</td><td class="score" style="color:var(--red)">55</td><td class="score" style="color:var(--red)">50</td><td class="score" style="color:var(--red)">45</td><td class="score" style="color:var(--red)">52</td><td class="score" style="color:var(--amber)">60</td><td class="score" style="color:var(--red)">50</td></tr>
+                        <tr><td>Power User</td><td class="score" style="color:var(--green)">88</td><td class="score" style="color:var(--green)">82</td><td class="score" style="color:var(--green)">75</td><td class="score" style="color:var(--green)">85</td><td class="score" style="color:var(--amber)">70</td><td class="score" style="color:var(--green)">81</td></tr>
+                        <tr><td>Distracted Multi.</td><td class="score" style="color:var(--red)">45</td><td class="score" style="color:var(--red)">40</td><td class="score" style="color:var(--red)">50</td><td class="score" style="color:var(--red)">42</td><td class="score" style="color:var(--amber)">60</td><td class="score" style="color:var(--red)">44</td></tr>
+                        <tr><td>Accessibility User</td><td class="score" style="color:var(--amber)">62</td><td class="score" style="color:var(--amber)">58</td><td class="score" style="color:var(--amber)">65</td><td class="score" style="color:var(--amber)">60</td><td class="score" style="color:var(--amber)">55</td><td class="score" style="color:var(--amber)">60</td></tr>
+                        <tr><td>Skeptical Eval.</td><td class="score" style="color:var(--green)">78</td><td class="score" style="color:var(--amber)">70</td><td class="score" style="color:var(--green)">75</td><td class="score" style="color:var(--amber)">72</td><td class="score" style="color:var(--amber)">68</td><td class="score" style="color:var(--green)">73</td></tr>
+                        <tr><td>UI Purist</td><td class="score" style="color:var(--green)">80</td><td class="score" style="color:var(--green)">75</td><td class="score" style="color:var(--green)">78</td><td class="score" style="color:var(--green)">82</td><td class="score" style="color:var(--amber)">62</td><td class="score" style="color:var(--green)">73</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="rh2">Dimension Summary</div>
+                <table class="report-table">
+                    <thead>
+                        <tr><th>Dimension</th><th>Avg</th><th>Weakest</th><th>Strongest</th><th>Systemic?</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Effectiveness</td><td class="score" style="color:var(--amber)">71</td><td>Distracted Multi.</td><td>Power User</td><td style="color:var(--red)">Yes</td></tr>
+                        <tr><td>Efficiency</td><td class="score" style="color:var(--amber)">64</td><td>Distracted Multi.</td><td>Power User</td><td style="color:var(--red)">Yes</td></tr>
+                        <tr><td>Learnability</td><td class="score" style="color:var(--amber)">66</td><td>Novice</td><td>Deliberator</td><td style="color:var(--red)">Yes</td></tr>
+                        <tr><td>Satisfaction</td><td class="score" style="color:var(--amber)">69</td><td>Distracted Multi.</td><td>Power User</td><td style="color:var(--amber)">Partial</td></tr>
+                        <tr><td>Craft</td><td class="score" style="color:var(--amber)">64</td><td>Accessibility</td><td>Deliberator</td><td style="color:var(--amber)">Partial</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="rtab-issues" class="report-pane">
+                <div class="rh2">Ranked Priorities with Potential Solutions</div>
+
+                <div style="background:var(--surface-2);border:1px solid var(--red);border-radius:8px;padding:1.25rem;margin:1rem 0;">
+                    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem;">
+                        <span style="background:var(--red);color:white;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.7rem;font-weight:600;">P0 CRITICAL</span>
+                        <span style="font-weight:600;font-family:-apple-system,system-ui,sans-serif;">CRT-001: No autosave — form state lost on tab switch</span>
+                    </div>
+                    <div><span class="rlabel">What happens:</span> <span class="rval">User fills chart configuration (title, data, axis settings) across 3 panels. Switches to another tab for 10 minutes. Returns — all inputs reset to defaults. ConfigPanel.tsx:89 stores state in component useState only, no localStorage or sessionStorage persistence. The Distracted Multitasker loses 100% of work.</span></div>
+                    <div style="margin-top:0.5rem;"><span class="rlabel">Where in code:</span> <span class="rval">ConfigPanel.tsx:89, ChartEditor.tsx:142</span></div>
+                    <div style="margin-top:0.5rem;"><span class="rlabel">Impact:</span> <span class="rval">Found by 5/9 personas. Red route: "create chart -> export." Distracted Multitasker FAILS. Deliberator flags anxiety. Skeptical Evaluator: trust destroyed.</span></div>
+                    <div style="margin-top:0.5rem;"><span class="rlabel">Potential solution:</span> <span style="color:var(--green);">Add debounced localStorage persistence on every state change. Restore on mount. Show "draft saved" indicator.</span></div>
+                    <div style="margin-top:0.5rem;"><span class="rlabel">Why #1:</span> <span class="rval">Userfocus Critical — show-stopper on red route, no workaround, persistent across all multi-step flows.</span></div>
+                </div>
+
+                <div style="background:var(--surface-2);border:1px solid var(--amber);border-radius:8px;padding:1.25rem;margin:1rem 0;">
+                    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem;">
+                        <span style="background:var(--amber);color:black;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.7rem;font-weight:600;">P1 SERIOUS</span>
+                        <span style="font-weight:600;font-family:-apple-system,system-ui,sans-serif;">FRC-003: 7 jargon terms on chart creation page</span>
+                    </div>
+                    <div><span class="rlabel">What happens:</span> <span class="rval">Chart creation page uses "Y-Axis Domain", "Ordinal Scale", "Datum", "Interpolation", "Categorical", "Discrete", "Aggregate" without explanation. Novice freezes at step 3 — decision paralysis. No tooltips on any label.</span></div>
+                    <div style="margin-top:0.5rem;"><span class="rlabel">Where in code:</span> <span class="rval">ChartOptions.tsx:45-78, AxisConfig.tsx:23</span></div>
+                    <div style="margin-top:0.5rem;"><span class="rlabel">Impact:</span> <span class="rval">Found by 3/9 personas (Novice, Deliberator, Skeptical Evaluator). Red route: yes. Workaround: trial-and-error.</span></div>
+                    <div style="margin-top:0.5rem;"><span class="rlabel">Potential solution:</span> <span style="color:var(--green);">Replace jargon labels with plain language ("Value Range" not "Y-Axis Domain"). Add info-icon tooltips for technical terms power users expect.</span></div>
+                </div>
+
+                <div style="background:var(--surface-2);border:1px solid var(--amber);border-radius:8px;padding:1.25rem;margin:1rem 0;">
+                    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem;">
+                        <span style="background:var(--amber);color:black;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.7rem;font-weight:600;">P1 SERIOUS</span>
+                        <span style="font-weight:600;font-family:-apple-system,system-ui,sans-serif;">FRC-005: No keyboard shortcuts for frequent actions</span>
+                    </div>
+                    <div><span class="rlabel">What happens:</span> <span class="rval">Power User must mouse-click through 4 menus to change chart type — an action done 10+ times daily. No Cmd+K command palette, no keyboard shortcuts registered. useHotkeys not imported anywhere in the codebase.</span></div>
+                    <div style="margin-top:0.5rem;"><span class="rlabel">Where in code:</span> <span class="rval">App.tsx (no keyboard listener), ChartSelector.tsx:12</span></div>
+                    <div style="margin-top:0.5rem;"><span class="rlabel">Impact:</span> <span class="rval">Found by 2/9 (Power User, Accessibility User). Not a show-stopper but persistent across all flows.</span></div>
+                    <div style="margin-top:0.5rem;"><span class="rlabel">Potential solution:</span> <span style="color:var(--green);">Add useHotkeys with Cmd+K command palette for chart type, theme, export. Register 5-10 shortcuts for frequent actions.</span></div>
+                </div>
+            </div>
+
+            <div id="rtab-coverage" class="report-pane">
+                <div class="rh2">Flow Coverage Matrix</div>
+                <div class="rmeta">12 flows discovered | 10/12 covered | 2 untested</div>
+
+                <table class="report-table" style="margin-top:1rem;">
+                    <thead>
+                        <tr><th>Flow</th><th>Scan</th><th>Del</th><th>Prag</th><th>Nov</th><th>Pow</th><th>Mul</th><th>A11y</th><th>Eval</th><th>Pur</th><th>Cov.</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Chart creation</td><td class="score">x</td><td class="score">x</td><td class="score">x</td><td class="score">x</td><td class="score">x</td><td class="score">x</td><td class="score">x</td><td class="score">x</td><td class="score">x</td><td class="score" style="color:var(--green)">9/9</td></tr>
+                        <tr><td>Data input (paste)</td><td class="score">x</td><td class="score">x</td><td class="score">x</td><td class="score">x</td><td class="score">x</td><td class="score"></td><td class="score">x</td><td class="score"></td><td class="score"></td><td class="score" style="color:var(--green)">6/9</td></tr>
+                        <tr><td>Export PDF</td><td class="score">x</td><td class="score">x</td><td class="score">x</td><td class="score"></td><td class="score">x</td><td class="score">x</td><td class="score">x</td><td class="score">x</td><td class="score"></td><td class="score" style="color:var(--green)">7/9</td></tr>
+                        <tr><td>Theme switching</td><td class="score"></td><td class="score">x</td><td class="score"></td><td class="score"></td><td class="score">x</td><td class="score"></td><td class="score"></td><td class="score">x</td><td class="score">x</td><td class="score" style="color:var(--amber)">4/9</td></tr>
+                        <tr><td>Report builder</td><td class="score"></td><td class="score">x</td><td class="score"></td><td class="score"></td><td class="score">x</td><td class="score">x</td><td class="score"></td><td class="score">x</td><td class="score"></td><td class="score" style="color:var(--amber)">4/9</td></tr>
+                        <tr><td>Settings</td><td class="score"></td><td class="score">x</td><td class="score"></td><td class="score"></td><td class="score">x</td><td class="score"></td><td class="score"></td><td class="score">x</td><td class="score"></td><td class="score" style="color:var(--amber)">3/9</td></tr>
+                        <tr style="opacity:0.5"><td>Admin panel</td><td class="score"></td><td class="score"></td><td class="score"></td><td class="score"></td><td class="score"></td><td class="score"></td><td class="score"></td><td class="score"></td><td class="score"></td><td class="score" style="color:var(--red)">0/9</td></tr>
+                        <tr style="opacity:0.5"><td>User preferences</td><td class="score"></td><td class="score"></td><td class="score"></td><td class="score"></td><td class="score"></td><td class="score"></td><td class="score"></td><td class="score"></td><td class="score"></td><td class="score" style="color:var(--red)">0/9</td></tr>
+                    </tbody>
+                </table>
+
+                <div style="margin-top:1rem;padding:0.8rem 1rem;background:rgba(248,113,113,0.1);border:1px solid var(--red);border-radius:8px;font-family:-apple-system,system-ui,sans-serif;font-size:0.85rem;">
+                    <strong style="color:var(--red);">2 untested flows:</strong> Admin panel, User preferences. Consider adding these to the next test run.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Evidence -->
-<section>
+<section id="methodology">
     <div class="section-label">Methodology</div>
     <h2>Three layers of evidence per persona</h2>
     <p class="section-desc">Every persona's existence is provable, not just theoretically motivated. Challenge any persona — the data backs it up.</p>
@@ -1235,7 +1602,7 @@ function switchTab(tabId) {
 </section>
 
 <!-- Scoring -->
-<section>
+<section id="scoring">
     <div class="section-label">Scoring</div>
     <h2>5-dimension composite usability model</h2>
     <p class="section-desc">Each persona scores across 5 dimensions with persona-specific weight adjustments. The Novice weights Learnability at 35%. The UI Purist weights Craft at 50%.</p>
@@ -1270,7 +1637,7 @@ function switchTab(tabId) {
 </section>
 
 <!-- Best For -->
-<section>
+<section id="product-fit">
     <div class="section-label">Product Fit</div>
     <h2>Built for web products people use every day</h2>
     <p class="section-desc">UTA personas are calibrated for products where users navigate pages, fill forms, click buttons, read content, and expect professional output.</p>
