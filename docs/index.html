@@ -240,13 +240,13 @@
 
         /* Hero */
         .hero {
-            min-height: 100vh;
+            min-height: 80vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 2rem;
+            padding: 4rem 2rem 3rem;
             position: relative;
             overflow: hidden;
         }
@@ -277,31 +277,31 @@
             border-radius: 100px;
             font-size: 0.85rem;
             color: var(--accent-light);
-            margin-bottom: 2rem;
+            margin-bottom: 1.25rem;
             letter-spacing: 0.05em;
         }
 
         h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
             font-weight: 700;
             letter-spacing: -0.03em;
             line-height: 1.1;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         h1 span { color: var(--accent-light); }
 
         .hero-sub {
-            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
             color: var(--text-muted);
             max-width: 600px;
-            margin: 0 auto 3rem;
+            margin: 0 auto 2rem;
             line-height: 1.5;
         }
 
         .hero-stats {
             display: flex;
-            gap: 3rem;
+            gap: 2.5rem;
             justify-content: center;
             flex-wrap: wrap;
         }
@@ -311,7 +311,7 @@
         }
 
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 700;
             color: var(--accent-light);
             line-height: 1;
@@ -327,7 +327,7 @@
         section {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 6rem 2rem;
+            padding: 3.5rem 2rem;
         }
 
         .section-label {
@@ -339,29 +339,29 @@
         }
 
         h2 {
-            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-size: clamp(1.6rem, 3.5vw, 2.4rem);
             font-weight: 700;
             letter-spacing: -0.02em;
             margin-bottom: 1rem;
         }
 
         .section-desc {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             color: var(--text-muted);
             max-width: 700px;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
 
         /* Comparison */
         .compare-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 4rem;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .compare-card {
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 16px;
             border: 1px solid var(--border);
         }
@@ -409,7 +409,7 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 2rem;
+            padding: 1.5rem;
             transition: all 0.3s ease;
             cursor: default;
         }
@@ -590,8 +590,8 @@
         .evidence-layer {
             display: flex;
             align-items: flex-start;
-            gap: 1.5rem;
-            padding: 1.5rem 2rem;
+            gap: 1.25rem;
+            padding: 1.25rem 1.5rem;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 12px;
@@ -872,7 +872,7 @@
         /* CTA */
         .cta {
             text-align: center;
-            padding: 6rem 2rem;
+            padding: 3.5rem 2rem;
         }
 
         .cta h2 { margin-bottom: 1.5rem; }
@@ -926,10 +926,28 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            .hero { min-height: auto; padding: 3rem 1.5rem 2rem; }
+            .hero-badge { margin-bottom: 1rem; font-size: 0.75rem; }
+            h1 { font-size: 2rem; margin-bottom: 0.75rem; }
+            .hero-sub { font-size: 0.95rem; margin-bottom: 1.5rem; }
+            .hero-stats { gap: 1.5rem; }
+            .stat-number { font-size: 1.5rem; }
+            .stat-label { font-size: 0.75rem; }
+            section { padding: 2.5rem 1.25rem; }
+            h2 { font-size: 1.4rem; }
+            .section-desc { font-size: 0.95rem; margin-bottom: 1.5rem; }
             .compare-grid { grid-template-columns: 1fr; }
-            .dimension-grid { grid-template-columns: repeat(2, 1fr); }
-            .persona-grid { grid-template-columns: 1fr; }
-            .hero-stats { gap: 2rem; }
+            .dimension-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .dimension-card { padding: 1rem; }
+            .dimension-weight { font-size: 1.5rem; }
+            .persona-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .persona-card { padding: 1.25rem; }
+            .fit-grid { grid-template-columns: 1fr; }
+            .fit-card { padding: 1.25rem; }
+            .mcp-feature-grid { grid-template-columns: 1fr; }
+            .evidence-layer { padding: 1rem; gap: 1rem; }
+            .report-body { padding: 1.25rem; font-size: 0.75rem; }
+            .cta { padding: 2.5rem 1.5rem; }
         }
     </style>
 </head>
